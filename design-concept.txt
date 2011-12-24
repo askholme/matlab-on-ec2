@@ -1,0 +1,17 @@
+Server:
+	Holds EC2 setting information etc.
+	Create job consisting of
+		Matlab program
+		Configuration file (distributed)
+		Number of required independent runs (X)
+		Number of runs completed (Y)
+	Server creates X messages in SQS containing configuration and link to program
+
+SQS queue control (cron)
+	Check jobs with Y<X and count number of SQS messages for them. If Y+#SQS<X create SQS messages
+
+SpotInstanceControl (cron)
+	Check active spotInstaceRequest
+	Check #SQS messages
+	Ensure that spot request is for min(#SQSmessages,MaxSpotInstaces)
+	
